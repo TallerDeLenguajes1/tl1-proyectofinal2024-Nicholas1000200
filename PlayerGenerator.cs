@@ -1,6 +1,6 @@
 
 
-namespace Juego_de_rol
+namespace GeneradorAleatorioPjs
 {
     //Esta clase se utiliza para generar personajes con atributos con valores aleatorios
     class Player
@@ -41,6 +41,7 @@ namespace Juego_de_rol
 
             return pj;
         }
+        //Metodo para generar la fecha de nacimiento
         private static DateTime FechaNacGenerador(Random rnd)
         {
             int anio = rnd.Next(DateTime.Now.Year - 60, DateTime.Now.Year - 18);
@@ -49,11 +50,14 @@ namespace Juego_de_rol
 
             return new DateTime(anio, mes, dia);
         }
+
+        //Metodo para calcular la edad con la fecha de nacimiento previamente creada
         private static int CalcularEdad(DateTime fechaNac)
         {
             int edad = DateTime.Now.Year - fechaNac.Year;
             return edad;
         }
+        //Metodo para asignar un nombre sin repetir a cada personaje
         private static string GenerarNombreUnico(Random rnd, string[] nombres)
         {
             string nombre;
@@ -65,6 +69,7 @@ namespace Juego_de_rol
             nombresUsados.Add(nombre);
             return nombre;
         }
+        //Metodo para mostrar los datos y caracteristicas de cada personaje
         public void Mostrar()
         {
             Console.WriteLine($"Nombre:{Nombre}");
