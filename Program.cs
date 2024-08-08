@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GeneradorAleatorioPjs;
 using TextoAnimacion;
-
+using Api;
 
 class Program
 {
@@ -10,6 +10,7 @@ class Program
     {
         do
         {
+            Texto.LogoSw();
             Texto.Menu();
             int opcion = int.Parse(Console.ReadLine());
 
@@ -60,9 +61,24 @@ class Program
         }
         Console.WriteLine("Eleccion(1-10):");
         int eleccion = int.Parse(Console.ReadLine()) - 1;
-        /* implementar la api aqui de edad, pueblo, nacimiento y algo mas */
         Player elegido = null;
         elegido = personajes[eleccion];
+        //Obtenemos datos personales de el personaje elegido a traves de la api
+        ApiSw.Character character;
+         character = await ApiSw.ApiStarWars(elegido.Nombre);
+
+        if (character != null)
+        {
+            Console.WriteLine($"Personaje encontrado: {character.Name}");
+            Console.WriteLine($"Altura: {character.Height}");
+            Console.WriteLine($"Peso: {character.Mass}");
+            Console.WriteLine($"Color de pelo: {character.HairColor}");
+            Console.WriteLine($"Color de piel: {character.SkinColor}");
+        }
+        else
+        {
+            Console.WriteLine("Personaje no encontrado.");
+        }
         while (personajes.Count > 1)
         {
             Console.WriteLine("El combate comenzara en breve...\n");
