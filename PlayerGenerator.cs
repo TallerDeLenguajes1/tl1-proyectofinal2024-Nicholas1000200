@@ -9,7 +9,6 @@ namespace GeneradorAleatorioPjs
         public int Salud { get; set; }
         public int Fuerza { get; set; }
         public int Destreza { get; set; }
-        public int Defensa { get; set; }
         public int Nivel { get; set; }
         public int Armadura { get; set; }
         public int Velocidad { get; set; }
@@ -27,7 +26,7 @@ namespace GeneradorAleatorioPjs
             Random rnd = new Random();
             Player pj = new Player();
             string[] nombres = { "Luke Skywalker", "Anakin Skywalker", "Han Solo", "Boba Fett", "Obi-Wan Kenobi", "C-3PO", "Jar Jar Binks", "Chewbacca", "General Grevious", "Mace Windu" };
-            string[] tipo = { "Jedi Knight", "Jedi Master", "Padawan", "Droid" };
+            string[] tipo = { "Sith", "Jedi", "Clon", "Droide","Mercenario" };
             pj.Tipo = tipo[rnd.Next(tipo.Length)];
             pj.Nombre = GenerarNombreUnico(rnd, nombres);
             pj.FechaNac = FechaNacGenerador(rnd);
@@ -69,22 +68,8 @@ namespace GeneradorAleatorioPjs
             nombresUsados.Add(nombre);
             return nombre;
         }
-        //Metodo para mostrar los datos y caracteristicas de cada personaje
-        public void Mostrar()
-        {
-            Console.WriteLine($"Nombre:{Nombre}");
-            Console.WriteLine($"Tipo:{Tipo}");
-            Console.WriteLine($"Edad:{Edad}");
-            Console.WriteLine($"Fecha Nacimiento:{FechaNac}");
-            Console.WriteLine();
-            Console.WriteLine("----CARACTERISTICAS----");
-            Console.WriteLine($"Salud:{Salud}");
-            Console.WriteLine($"Nivel:{Nivel}");
-            Console.WriteLine($"Velocidad:{Velocidad}");
-            Console.WriteLine($"Fuerza:{Fuerza}");
-            Console.WriteLine($"Destreza:{Destreza}");
-            Console.WriteLine($"Armadura:{Armadura}");
-            Console.WriteLine($"Salud:{Salud}");
+        public static void Limpiar(){
+            nombresUsados.Clear();
         }
     }
 
