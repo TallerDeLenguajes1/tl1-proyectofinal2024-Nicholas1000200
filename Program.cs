@@ -69,10 +69,10 @@ class Program
 
         if (character != null)
         {
-            Console.WriteLine($"Personaje encontrado: {character.Name}");
+            Console.WriteLine($"Caracteristicas de el personaje {character.Name} elegido");
             Console.WriteLine($"Altura: {character.Height}");
-            Console.WriteLine($"Peso: {character.Mass}");
-            Console.WriteLine($"Color de pelo: {character.HairColor}");
+            Console.WriteLine($"Fecha de Nacimiento: {character.BirthDate}");
+            Console.WriteLine($"Planeta de Nacimiento: {character.Homeworld}");
             Console.WriteLine($"Color de piel: {character.SkinColor}");
         }
         else

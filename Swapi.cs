@@ -16,12 +16,11 @@ namespace Api
 
             [JsonPropertyName("height")]
             public string Height { get; set; }
+            [JsonPropertyName("birth_year")]
+            public string BirthDate { get; set; }
 
-            [JsonPropertyName("mass")]
-            public string Mass { get; set; }
-
-            [JsonPropertyName("hair_color")]
-            public string HairColor { get; set; }
+            [JsonPropertyName("homeworld")]
+            public string Homeworld { get; set; }
 
             [JsonPropertyName("skin_color")]
             public string SkinColor { get; set; }

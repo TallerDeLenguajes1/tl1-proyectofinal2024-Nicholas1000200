@@ -1,6 +1,4 @@
 using System.Text.Json;
-using System.IO;
-using System.Collections.Generic;
 using GeneradorAleatorioPjs;
 
 

@@ -3,7 +3,7 @@
 namespace GeneradorAleatorioPjs
 {
     //Esta clase se utiliza para generar personajes con atributos con valores aleatorios
-    class Player
+    public class Player
     {
         //Caracteristicas de los personajes
         public int Salud { get; set; }
