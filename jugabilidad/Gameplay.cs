@@ -5,7 +5,7 @@ namespace Gameplay
 {
     class Gameplay
     {
-        //Funcion general que ejecutara todo el combate utilizando funciones mas particulares para cada situacion, empezando el turno siempre por el jugador y despues su oponente
+        //Metodo general que ejecutara todo el combate utilizando funciones mas particulares para cada situacion, empezando el turno siempre por el jugador y despues su oponente
         public static void Batalla(Player pj1, Player pj2, List<Player> Listapjs)
         {
             Random rnd = new Random();
@@ -21,7 +21,7 @@ namespace Gameplay
                 Console.ReadLine();
                 if (pj2.Salud <= 0)
                 {
-                    Texto.Animacion(15,$"El vencedor es {pj1.Nombre}");
+                    Texto.Animacion(15,$"El vencedor es {pj1.Nombre}\n");
                     Texto.Animacion(15,"Fuiste bendecido, obtendras una mejora por tu triunfo!!!\n");
                     Listapjs.Remove(pj2);
                     MejorarPj(pj1);
@@ -42,6 +42,7 @@ namespace Gameplay
                 }
             }
         }
+        //Metodo para calcular el daño utilizando calculos matematicos
         public static int CalcularDaño(Player atacante, Player defensor, Random rnd)
         {
             int ataque = atacante.Destreza * atacante.Fuerza * atacante.Nivel;
@@ -51,6 +52,7 @@ namespace Gameplay
             int daño = ((ataque * efectividad) - defensa) / constanteAjuste;
             return daño;
         }
+        //Metodo para mejorar el personaje elegido despues de cada ronda si es que sale victorioso
         public static void MejorarPj(Player pj)
         {
             Console.WriteLine("1- Mejorar Nivel +5 ");
@@ -59,6 +61,7 @@ namespace Gameplay
             Console.WriteLine("4- Mejorar Velocidad +5 ");
             Console.WriteLine("5- Mejorar Fuerza +5 ");
             int opcionMejora;
+            Console.WriteLine("Eleccion Mejora:");
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out opcionMejora) && opcionMejora >= 1 && opcionMejora <= 5)
@@ -67,23 +70,23 @@ namespace Gameplay
                     {
                         case 1:
                             pj.Nivel += 5;
-                            Console.WriteLine($"El nivel de {pj.Nombre} se ha aumentado + 5");
+                            Console.WriteLine($"El nivel de {pj.Nombre} se ha aumentado + 5\n");
                             break;
                         case 2:
                             pj.Armadura += 5;
-                            Console.WriteLine($"La armadura de {pj.Nombre} se ha aumentado + 5");
+                            Console.WriteLine($"La armadura de {pj.Nombre} se ha aumentado + 5\n");
                             break;
                         case 3:
                             pj.Destreza += 5;
-                            Console.WriteLine($"La destreza de {pj.Nombre} se ha aumentado + 5");
+                            Console.WriteLine($"La destreza de {pj.Nombre} se ha aumentado + 5\n");
                             break;
                         case 4:
                             pj.Velocidad += 5;
-                            Console.WriteLine($"La velocidad de {pj.Nombre} se ha aumentado + 5");
+                            Console.WriteLine($"La velocidad de {pj.Nombre} se ha aumentado + 5\n");
                             break;
                         case 5:
                             pj.Fuerza += 5;
-                            Console.WriteLine($"La fuerza de {pj.Nombre} se ha aumentado + 5");
+                            Console.WriteLine($"La fuerza de {pj.Nombre} se ha aumentado + 5\n");
                             break;
                         default:
                             break;

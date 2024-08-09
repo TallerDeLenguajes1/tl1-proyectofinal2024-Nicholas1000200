@@ -28,7 +28,7 @@ namespace GeneradorAleatorioPjs
         {
             Random rnd = new Random();
             Player pj = new Player();
-            string[] nombres = { "Luke Skywalker", "Anakin Skywalker","Han Solo", "Boba Fett", "Obi-Wan Kenobi", "C-3PO", "Jar Jar Binks", "Chewbacca", "General Grevious", "Mace Windu"};
+            string[] nombres = { "Luke Skywalker", "Anakin Skywalker","Han Solo", "Boba Fett", "Obi-Wan Kenobi", "C-3PO", "Jar Jar Binks", "Chewbacca", "Darth Vader", "Mace Windu"};
             string[] tipo = { "Sith", "Jedi", "Clon", "Droide","Mercenario" };
             pj.Tipo = tipo[rnd.Next(tipo.Length)];
             pj.Nombre = GenerarNombreUnico(rnd, nombres);

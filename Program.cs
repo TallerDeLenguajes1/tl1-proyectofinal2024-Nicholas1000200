@@ -7,6 +7,7 @@ using HistorialJson;
 
 class Program
 {
+    /* Comienza el programa y muestra el logo, con un menu para seleccionar sus opciones */
     static async Task Main()
     {
         do
@@ -37,7 +38,7 @@ class Program
         Player.Limpiar();
         string nombreArchivoPjs = "personajes/personajesJson.json";
         List<Player> personajes;
-
+        //Verifica si existe el archivo de los personajes y si tiene contenido, si no es asi agrega los personajes
         if (PersonajesJson.PersonajesJson.Existe(nombreArchivoPjs))
         {
             personajes = PersonajesJson.PersonajesJson.LeerJson(nombreArchivoPjs);
@@ -51,6 +52,7 @@ class Program
             }
             PersonajesJson.PersonajesJson.GuardarPJJson(personajes, nombreArchivoPjs);
         }
+        //Muestra los personajes disponibles y permite elegir uno
         Console.WriteLine("\nElija su personaje:");
         for (int i = 0; i < personajes.Count; i++)
         {
@@ -73,7 +75,7 @@ class Program
             Console.WriteLine("Elija un numero entre 1 y 10 por favor");
         }
         Player elegido = personajes[Seleccion - 1];
-        //Obtenemos datos personales de el personaje elegido a traves de la api
+        //Obtenemos caracteristicas personales de el personaje elegido a traves de la api
         ApiSw.Character character;
         character = await ApiSw.ApiStarWars(elegido.Nombre);
 
@@ -89,6 +91,7 @@ class Program
         {
             Console.WriteLine("Personaje no encontrado.");
         }
+        //Comienzo de el combate
         while (personajes.Count > 1)
         {
             Console.WriteLine("El combate comenzara en breve...\n");
@@ -101,10 +104,10 @@ class Program
             int indiceOponente = rand.Next(ListaOponentes.Count);
             Player oponente = ListaOponentes[indiceOponente];
 
-            Texto.Animacion(20,$"El epico combate entre {elegido.Nombre} y {oponente.Nombre} ha comenzado!!!\n");
+            Texto.Animacion(20,$"El epico combate entre {elegido.Nombre} y {oponente.Nombre} ha comenzado!!!\n\n");
 
             Gameplay.Gameplay.Batalla(elegido, oponente, personajes);
-
+            //Despues de realizar la batalla verifica la salud de tanto el jugador como el oponente
             if (elegido.Salud <= 0)
             {
                 elegido = null;
@@ -117,12 +120,13 @@ class Program
                 personajes.Remove(oponente);
                 if (personajes.Count > 1)
                 {
-                    Console.WriteLine("-RONDA GANADA-\n Pasaremos al siguiente combate a muerte\n");
+                    Console.WriteLine("\t-RONDA GANADA-\n\n Pasaremos al siguiente combate a muerte\n");
                 }
             }
+            // Verifica la cantidad de personajes restantes en la lista y si es igual a 1(queda solo el personaje elegido) proclama ganador al jugador principal
             if (personajes.Count == 1)
             {
-                Console.WriteLine("Derrotaste a todos tus enemigos, seras recordado como una leyenda hasta el fin de los tiempos");
+                Texto.Animacion(15,"Derrotaste a todos tus enemigos, seras recordado como una leyenda hasta el fin de los tiempos\n");
                 string archivoHistorial = "historial/HistorialJson.json";
                 var historia = new HistorialJson1();
                 /* HistorialJson.HistorialJson.(elegido, archivoHistorial) */;
@@ -132,6 +136,7 @@ class Program
             PersonajesJson.PersonajesJson.GuardarPJJson(personajes, nombreArchivoPjs);
         }
     }
+    //Metodo que muestra un historial de los personajes ganadores
     static void VerGanadores()
     {
         Console.Clear();
@@ -156,7 +161,7 @@ class Program
         else
         {
             // Muestra un mensaje si no hay historial de ganadores
-            Texto.Animacion(15,"No hay historial de ganadores.");
+            Texto.Animacion(15,"No hay historial de ganadores.\n");
         }
         Console.WriteLine("Volver al menu...");
         Console.ReadLine();

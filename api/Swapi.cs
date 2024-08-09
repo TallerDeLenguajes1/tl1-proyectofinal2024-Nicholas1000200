@@ -33,7 +33,7 @@ namespace Api
             [JsonPropertyName("next")]
             public string Next { get; set; }
         }
-
+        //Metodo para obtener los datos especificos de el personaje elegido a traves de una api que consta de varias paginas
         public static async Task<Character> ApiStarWars(string nombre)
         {
             string urlBase = "https://swapi.dev/api/people/?page=";
@@ -62,14 +62,14 @@ namespace Api
                     {
                         if (resultado.Name.Equals(nombre, StringComparison.OrdinalIgnoreCase))
                         {
-                            return resultado; // Retornar el personaje encontrado
+                            return resultado;
                         }
                     }
 
-                    // Verificar si hay más páginas
+                    // Verificar si hay más páginas y si no hay mas paginas, sale del bucle
                     if (string.IsNullOrEmpty(json.Next))
                     {
-                        break; // No hay más páginas, salir del bucle
+                        break;
                     }
 
                     pagina++;
