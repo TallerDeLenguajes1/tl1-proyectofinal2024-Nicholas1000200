@@ -19,13 +19,16 @@ namespace GeneradorAleatorioPjs
         public DateTime FechaNac { get; set; }
         public int Edad { get; set; }
 
+        public static void Limpiar(){
+            nombresUsados.Clear();
+        }
         private static List<string> nombresUsados = new List<string>();
         //Metodo para asignar valores a cada atributo de los personajes
         public static Player PlayerGenerator()
         {
             Random rnd = new Random();
             Player pj = new Player();
-            string[] nombres = { "Luke Skywalker", "Anakin Skywalker", "Han Solo", "Boba Fett", "Obi-Wan Kenobi", "C-3PO", "Jar Jar Binks", "Chewbacca", "General Grevious", "Mace Windu" };
+            string[] nombres = { "Luke Skywalker", "Anakin Skywalker","Han Solo", "Boba Fett", "Obi-Wan Kenobi", "C-3PO", "Jar Jar Binks", "Chewbacca", "General Grevious", "Mace Windu"};
             string[] tipo = { "Sith", "Jedi", "Clon", "Droide","Mercenario" };
             pj.Tipo = tipo[rnd.Next(tipo.Length)];
             pj.Nombre = GenerarNombreUnico(rnd, nombres);
@@ -68,9 +71,7 @@ namespace GeneradorAleatorioPjs
             nombresUsados.Add(nombre);
             return nombre;
         }
-        public static void Limpiar(){
-            nombresUsados.Clear();
-        }
+
     }
 
 

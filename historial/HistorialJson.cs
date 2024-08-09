@@ -4,15 +4,29 @@ using GeneradorAleatorioPjs;
 
 namespace HistorialJson
 {
-    public class HistorialJson
+    public class HistorialJson1
     {
         //Metodo para guardar los ganadores
-        public static void GuardarJsonGanador(Player pj, string nombreArchivo)
+        public void GuardarGanador(Player datoGanador, string nombreArchivo)
         {
-            List<Player> Ganadores = LeerJsonGanadores(nombreArchivo);
-            Ganadores.Add(pj);
-            string json = JsonSerializer.Serialize(Ganadores);
-            File.WriteAllText(nombreArchivo, json);
+            string ruta = nombreArchivo;
+            var historial = new List<Player>();
+            if (Existe(nombreArchivo))
+            {
+                historial = LeerJsonGanadores(nombreArchivo);
+            }
+            historial.Add(datoGanador);
+            string historialString = CrearArchivoHistorialJson(historial);
+            FileStream archivo = new FileStream(nombreArchivo, FileMode.OpenOrCreate);
+            using (StreamWriter strwriter = new StreamWriter(archivo))
+            {
+                strwriter.WriteLine("{0}", historialString);
+                strwriter.Close();
+            }
+        }
+        public string CrearArchivoHistorialJson(List<Player> dato)
+        {
+            return JsonSerializer.Serialize(dato);
         }
         //Metodo para leer los ganadores
         public static List<Player> LeerJsonGanadores(string nombreArchivo)
@@ -21,6 +35,7 @@ namespace HistorialJson
             {
                 string json = File.ReadAllText(nombreArchivo);
                 return JsonSerializer.Deserialize<List<Player>>(json);
+
             }
             return new List<Player>();
         }

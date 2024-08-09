@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GeneradorAleatorioPjs;
 using TextoAnimacion;
 using Api;
+using HistorialJson;
 
 class Program
 {
@@ -12,20 +13,20 @@ class Program
         {
             Texto.LogoSw();
             Texto.Menu();
-            int opcion = int.Parse(Console.ReadLine());
-
+            string opcion = Console.ReadLine().ToUpper();
             switch (opcion)
             {
-                case 1:
+                case "1":
                     await EmpiezaJuego();
                     break;
-                case 2:
+                case "2":
                     VerGanadores();
                     break;
-                case 3:
+                case "3":
                     return;
                 default:
                     Console.WriteLine("OPCION NO VALIDA\nLimitese a escribir un numero entre 1 y 3");
+                    Console.WriteLine("Volver al menu...");
                     Console.ReadLine();
                     break;
             }
@@ -34,7 +35,7 @@ class Program
     static async Task EmpiezaJuego()
     {
         Player.Limpiar();
-        string nombreArchivoPjs = "personajesJson.json";
+        string nombreArchivoPjs = "personajes/personajesJson.json";
         List<Player> personajes;
 
         if (PersonajesJson.PersonajesJson.Existe(nombreArchivoPjs))
@@ -53,27 +54,36 @@ class Program
         Console.WriteLine("\nElija su personaje:");
         for (int i = 0; i < personajes.Count; i++)
         {
-            Console.WriteLine($"{i + 1} - Nombre:{personajes[i].Nombre} - Tipo:{personajes[i].Tipo}");
-            Console.WriteLine($"Armadura:{personajes[i].Armadura}");
-            Console.WriteLine($"Velocidad:{personajes[i].Velocidad}");
-            Console.WriteLine($"Destreza:{personajes[i].Destreza}");
-            Console.WriteLine($"Fuerza:{personajes[i].Fuerza}");
+            Texto.Animacion(15, $"{i + 1} - Nombre: {personajes[i].Nombre} - Tipo: {personajes[i].Tipo}\n");
+            Texto.Animacion(15, $"Armadura: {personajes[i].Armadura}\n");
+            Texto.Animacion(15, $"Velocidad: {personajes[i].Velocidad}\n");
+            Texto.Animacion(15, $"Destreza: {personajes[i].Destreza}\n");
+            Texto.Animacion(15, $"Fuerza: {personajes[i].Fuerza}\n");
+            Texto.Animacion(15, $"Nivel: {personajes[i].Nivel}\n");
         }
+
         Console.WriteLine("Eleccion(1-10):");
-        int eleccion = int.Parse(Console.ReadLine()) - 1;
-        Player elegido = null;
-        elegido = personajes[eleccion];
+        int Seleccion;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(),out Seleccion) && Seleccion >= 1 && Seleccion <= personajes.Count)
+            {
+                break;
+            }
+            Console.WriteLine("Elija un numero entre 1 y 10 por favor");
+        }
+        Player elegido = personajes[Seleccion - 1];
         //Obtenemos datos personales de el personaje elegido a traves de la api
         ApiSw.Character character;
-         character = await ApiSw.ApiStarWars(elegido.Nombre);
+        character = await ApiSw.ApiStarWars(elegido.Nombre);
 
         if (character != null)
         {
-            Console.WriteLine($"Caracteristicas de el personaje {character.Name} elegido");
-            Console.WriteLine($"Altura: {character.Height}");
-            Console.WriteLine($"Fecha de Nacimiento: {character.BirthDate}");
-            Console.WriteLine($"Planeta de Nacimiento: {character.Homeworld}");
-            Console.WriteLine($"Color de piel: {character.SkinColor}");
+            Texto.Animacion(15, $"Caracteristicas de el personaje {character.Name} elegido\n");
+            Texto.Animacion(15, $"Altura: {character.Height}\n");
+            Texto.Animacion(15, $"Fecha de Nacimiento: {character.BirthDate}\n");
+            Texto.Animacion(15, $"Color de piel: {character.SkinColor}\n");
+            Texto.Animacion(15, $"Genero: {character.Gender}\n");
         }
         else
         {
@@ -82,6 +92,8 @@ class Program
         while (personajes.Count > 1)
         {
             Console.WriteLine("El combate comenzara en breve...\n");
+            Console.WriteLine("Presione Enter para comenzar");
+            Console.ReadLine();
             List<Player> ListaOponentes = new List<Player>(personajes);
             /* Borramos el personaje elegido previamente y asignamos un oponente aleatoreamente */
             ListaOponentes.Remove(elegido);
@@ -105,31 +117,33 @@ class Program
                 personajes.Remove(oponente);
                 if (personajes.Count > 1)
                 {
-                    Console.WriteLine("-RONDA GANADA- \n Pasaremos al siguiente combate a muerte");
+                    Console.WriteLine("-RONDA GANADA-\n Pasaremos al siguiente combate a muerte\n");
                 }
             }
             if (personajes.Count == 1)
             {
                 Console.WriteLine("Derrotaste a todos tus enemigos, seras recordado como una leyenda hasta el fin de los tiempos");
-                string archivoHistorial = "HistorialJson.json";
-                HistorialJson.HistorialJson.GuardarJsonGanador(elegido, archivoHistorial);
+                string archivoHistorial = "historial/HistorialJson.json";
+                var historia = new HistorialJson1();
+                /* HistorialJson.HistorialJson.(elegido, archivoHistorial) */;
+                historia.GuardarGanador(elegido,archivoHistorial);
                 personajes.Clear();
             }
-            PersonajesJson.PersonajesJson.GuardarPJJson(personajes,nombreArchivoPjs);
+            PersonajesJson.PersonajesJson.GuardarPJJson(personajes, nombreArchivoPjs);
         }
     }
     static void VerGanadores()
     {
         Console.Clear();
         // Define la ruta del archivo JSON de ganadores
-        string nombreArchivoG = "HistorialJson.json";
+        string nombreArchivoG = "historial/HistorialJson.json";
 
         // Verifica si el archivo de ganadores existe
 
-        if (HistorialJson.HistorialJson.Existe(nombreArchivoG))
+        if (HistorialJson.HistorialJson1.Existe(nombreArchivoG))
         {
             // Lee los ganadores del archivo JSON si este existe
-            List<Player> ganadores = HistorialJson.HistorialJson.LeerJsonGanadores(nombreArchivoG);
+            List<Player> ganadores = HistorialJson.HistorialJson1.LeerJsonGanadores(nombreArchivoG);
 
             // Muestra la lista de ganadores
             Console.WriteLine("\nHistorial de ganadores:");
