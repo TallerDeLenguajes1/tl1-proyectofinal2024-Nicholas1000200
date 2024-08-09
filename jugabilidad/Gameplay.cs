@@ -1,4 +1,5 @@
 using GeneradorAleatorioPjs;
+using TextoAnimacion;
 
 namespace Gameplay
 {
@@ -20,8 +21,8 @@ namespace Gameplay
                 Console.ReadLine();
                 if (pj2.Salud <= 0)
                 {
-                    Console.WriteLine($"El vencedor es {pj1.Nombre}");
-                    Console.WriteLine("Fuiste bendecido, obtendras una mejora por tu triunfo!!!\n");
+                    Texto.Animacion(15,$"El vencedor es {pj1.Nombre}");
+                    Texto.Animacion(15,"Fuiste bendecido, obtendras una mejora por tu triunfo!!!\n");
                     Listapjs.Remove(pj2);
                     MejorarPj(pj1);
                     banderaCombate = false;
@@ -35,8 +36,8 @@ namespace Gameplay
 
                 if (pj1.Salud <= 0)
                 {
-                    Console.WriteLine($"El vencedor es {pj2.Nombre}");
-                    Console.WriteLine("-HAZ SIDO DERROTADO LA FUERZA NO ESTUVO DE TU LADO-");
+                    Texto.Animacion(15,$"El vencedor es {pj2.Nombre}\n");
+                    Texto.Animacion(15,"-HAZ SIDO DERROTADO LA FUERZA NO ESTUVO DE TU LADO-\n");
                     banderaCombate = false;
                 }
             }
@@ -66,7 +67,7 @@ namespace Gameplay
                     {
                         case 1:
                             pj.Nivel += 5;
-                            Console.WriteLine($"El nivel de {pj.Nombre} se ha aumentado + 10");
+                            Console.WriteLine($"El nivel de {pj.Nombre} se ha aumentado + 5");
                             break;
                         case 2:
                             pj.Armadura += 5;

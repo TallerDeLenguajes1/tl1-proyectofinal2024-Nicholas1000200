@@ -36,6 +36,8 @@ namespace HistorialJson
                 string json = File.ReadAllText(nombreArchivo);
                 return JsonSerializer.Deserialize<List<Player>>(json);
 
+            }else{
+                Console.WriteLine("No hay lista de ganadores");
             }
             return new List<Player>();
         }

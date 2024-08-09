@@ -101,7 +101,7 @@ class Program
             int indiceOponente = rand.Next(ListaOponentes.Count);
             Player oponente = ListaOponentes[indiceOponente];
 
-            Console.WriteLine($"El epico combate entre {elegido.Nombre} y {oponente.Nombre} ha comenzado!!!\n");
+            Texto.Animacion(20,$"El epico combate entre {elegido.Nombre} y {oponente.Nombre} ha comenzado!!!\n");
 
             Gameplay.Gameplay.Batalla(elegido, oponente, personajes);
 
@@ -137,10 +137,11 @@ class Program
         Console.Clear();
         // Define la ruta del archivo JSON de ganadores
         string nombreArchivoG = "historial/HistorialJson.json";
+        bool existe = HistorialJson.HistorialJson1.Existe(nombreArchivoG);
 
         // Verifica si el archivo de ganadores existe
 
-        if (HistorialJson.HistorialJson1.Existe(nombreArchivoG))
+        if (existe)
         {
             // Lee los ganadores del archivo JSON si este existe
             List<Player> ganadores = HistorialJson.HistorialJson1.LeerJsonGanadores(nombreArchivoG);
@@ -155,8 +156,10 @@ class Program
         else
         {
             // Muestra un mensaje si no hay historial de ganadores
-            Console.WriteLine("No hay historial de ganadores.");
+            Texto.Animacion(15,"No hay historial de ganadores.");
         }
+        Console.WriteLine("Volver al menu...");
+        Console.ReadLine();
     }
 }
 
