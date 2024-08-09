@@ -39,42 +39,50 @@ namespace Api
             string urlBase = "https://swapi.dev/api/people/?page=";
             int pagina = 1;
 
-            using (HttpClient client = new HttpClient())
+            try
             {
-                while (true)
+                using (HttpClient client = new HttpClient())
                 {
-                    // Construir la URL para la página actual
-                    string url = urlBase + pagina;
-
-                    // Hacer la solicitud HTTP
-                    HttpResponseMessage response = await client.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
-
-                    // Leer la respuesta como cadena
-                    string responseBody = await response.Content.ReadAsStringAsync();
-
-                    // Deserializar la respuesta JSON
-                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                    ApiResponse json = JsonSerializer.Deserialize<ApiResponse>(responseBody, options);
-
-                    // Buscar el personaje en la página actual
-                    foreach (var resultado in json.Results)
+                    while (true)
                     {
-                        if (resultado.Name.Equals(nombre, StringComparison.OrdinalIgnoreCase))
+                        // Construir la URL para la página actual
+                        string url = urlBase + pagina;
+
+                        // Hacer la solicitud HTTP
+                        HttpResponseMessage response = await client.GetAsync(url);
+                        response.EnsureSuccessStatusCode();
+
+                        // Leer la respuesta como cadena
+                        string responseBody = await response.Content.ReadAsStringAsync();
+
+                        // Deserializar la respuesta JSON
+                        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                        ApiResponse json = JsonSerializer.Deserialize<ApiResponse>(responseBody, options);
+
+                        // Buscar el personaje en la página actual
+                        foreach (var resultado in json.Results)
                         {
-                            return resultado;
+                            if (resultado.Name.Equals(nombre, StringComparison.OrdinalIgnoreCase))
+                            {
+                                return resultado;
+                            }
                         }
-                    }
 
-                    // Verificar si hay más páginas y si no hay mas paginas, sale del bucle
-                    if (string.IsNullOrEmpty(json.Next))
-                    {
-                        break;
-                    }
+                        // Verificar si hay más páginas y si no hay mas paginas, sale del bucle
+                        if (string.IsNullOrEmpty(json.Next))
+                        {
+                            break;
+                        }
 
-                    pagina++;
+                        pagina++;
+                    }
                 }
             }
+            catch(Exception e){
+                Console.WriteLine("Ocurrio un error inesperado");
+                Console.WriteLine($"Error: {e.Message}");
+            }
+
 
             return null; // Personaje no encontrado
         }
