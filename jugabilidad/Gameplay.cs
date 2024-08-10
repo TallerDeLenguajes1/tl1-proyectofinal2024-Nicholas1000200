@@ -17,10 +17,9 @@ namespace Gameplay
             {
                 int daño = CalcularDaño(pj1, pj2, rnd);
                 pj2.Salud -= daño;
-                Console.WriteLine($"{pj1.Nombre} ha atacado a {pj2.Nombre} y ha infligido {daño} de daño, la salud de {pj2.Nombre} es de {pj2.Salud}\n");
-                Console.ReadLine();
                 if (pj2.Salud <= 0)
                 {
+                    Console.WriteLine($"{pj1.Nombre} ha atacado a {pj2.Nombre} y ha infligido {daño} de daño, la salud de {pj2.Nombre} es de 0 \n");
                     Texto.Animacion(15,$"El vencedor es {pj1.Nombre}\n");
                     Texto.Animacion(15,"Fuiste bendecido, obtendras una mejora por tu triunfo!!!\n");
                     Listapjs.Remove(pj2);
@@ -29,17 +28,21 @@ namespace Gameplay
                     break;
 
                 }
+                Console.WriteLine($"{pj1.Nombre} ha atacado a {pj2.Nombre} y ha infligido {daño} de daño, la salud de {pj2.Nombre} es de {pj2.Salud}\n");
+                Console.ReadLine();
                 daño = CalcularDaño(pj1, pj2, rnd);
                 pj1.Salud -= daño;
-                Console.WriteLine($"{pj2.Nombre} ha atacado a {pj1.Nombre} y ha infligido {daño} de daño, la salud de {pj1.Nombre} es de {pj1.Salud}\n");
-                Console.ReadLine();
-
                 if (pj1.Salud <= 0)
                 {
+                    Console.WriteLine($"{pj2.Nombre} ha atacado a {pj1.Nombre} y ha infligido {daño} de daño, la salud de {pj1.Nombre} es de 0\n");
                     Texto.Animacion(15,$"El vencedor es {pj2.Nombre}\n");
                     Texto.Animacion(15,"-HAZ SIDO DERROTADO LA FUERZA NO ESTUVO DE TU LADO-\n");
                     banderaCombate = false;
+                    break;
                 }
+                Console.WriteLine($"{pj2.Nombre} ha atacado a {pj1.Nombre} y ha infligido {daño} de daño, la salud de {pj1.Nombre} es de {pj1.Salud}\n");
+                Console.ReadLine();
+
             }
         }
         //Metodo para calcular el daño utilizando calculos matematicos
