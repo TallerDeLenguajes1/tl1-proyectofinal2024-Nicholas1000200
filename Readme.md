@@ -1,8 +1,8 @@
-#Star Wars
+# Star Wars
 
 **Star Wars** es un juego basado en la exitosa saga de peliculas en la que elegiremos un personaje que nos acompañara en 10 combates a muerte en los cuales se disputa la gloria y la mayor conexion con la fuerza.
 
-##Menu Principal
+## Menu Principal
 
 Comezamos el juego mostrando un menu simple conciso que consta de tres opciones:
 
@@ -10,7 +10,7 @@ Comezamos el juego mostrando un menu simple conciso que consta de tres opciones:
 - 2.Historial de Ganadores.
 - 3.Salir.
 
-###Jugar
+### Jugar
 
 - Comenzamos el juego.
 
@@ -30,11 +30,11 @@ Comezamos el juego mostrando un menu simple conciso que consta de tres opciones:
 
 - Despues de haber obtenido la bonificacion se verifica la cantidad de oponentes restantes, si ya no quedan oponentes se proclama ganador al jugador y se guarda el nombre del personaje en un archivo JSON, si todavia quedan oponentes avanza a la siguiente ronda contra un nuevo oponente.
 
-###Historial de Ganadores
+### Historial de Ganadores
 
 - Verifica que haya un historial de ganadores y lo muestra, si no es asi muestra el mensaje "No hay historial de ganadores".
 
 
-###Salir
+### Salir
 
 - Simplemente termina el programa en la instancia que se encuentre
